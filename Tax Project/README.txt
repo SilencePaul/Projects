@@ -4,3 +4,4 @@
 4. For the T4, Tuition, CWB, Donations and Gifts part, please dont leave any blank. If you dont have the information, please enter 0 instead.
 5. After press 'Run' button, you can choose to get information from txt or excel.
 6. Then, the program will automaticly generate your tax refund or balance owing.
+The project is just for 2021, information will change base on the year.
