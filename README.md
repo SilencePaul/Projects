@@ -1,2 +1,2 @@
 # Projects
-Projects done in McMaster University
+Projects shows my work
