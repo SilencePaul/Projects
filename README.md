@@ -1,2 +1,2 @@
 # Projects
-Projects shows my work
+Projects including academic projects and personal projects.
