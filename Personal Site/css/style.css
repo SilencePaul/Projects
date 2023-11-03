@@ -1,5 +1,5 @@
 .text-font {
-  font-family: 'Playfair Display', serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .navbar-nav {
@@ -15,4 +15,30 @@
 .footer {
   text-align: center;
   padding: 10px;
+}
+
+body {
+  background-color: #fdfaee;
+  color: #433a0b;
+}
+.navbar {
+  background-color: #948a68;
+  
+}
+.nav-link {
+  color: #fdfaee;
+}
+
+.dropdown-menu {
+  background-color: #948a68;
+}
+
+.dropdown-item {
+  color: #fdfaee;
+}
+
+.skill-icon {
+  max-width: 100px; /* Example size */
+  margin: 0 auto; /* Centers the icon in the column */
+  display: block; /* Ensures the margin is applied correctly */
 }
