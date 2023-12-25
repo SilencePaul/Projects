@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load filters %}
+
+{% block content %}
+    
+<div class="container is-fluid">
+    <section class="hero is-info">
+        <div class="hero-body has-text-centered">
+            <p class="title">
+                Welcome to LoL Helper
+            </p>
+            <p class="subtitle">
+                Your ultimate guide to the champions of League of Legends
+            </p>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="content has-text-centered">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/League_of_Legends_2019_vector.svg" alt="League of Legends Logo">
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <h1 class="title has-text-centered">What is League of Legends?</h1>
+                <p class="has-text-centered">
+                    League of Legends (LoL) is a fast-paced online game that blends the speed and intensity of an RTS with RPG elements.
+                    Two teams of powerful champions, each with a unique design and playstyle, battle head-to-head across various battlefields and game modes.
+                    With an ever-expanding roster of champions, frequent updates, and a thriving tournament scene, League of Legends offers endless replayability for players of every skill level.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+

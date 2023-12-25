@@ -1,0 +1,16 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto; /* The .content class is used here as an example; apply this style to the main content area of your site */
+}
+.footer {
+    flex-shrink: 0;
+}

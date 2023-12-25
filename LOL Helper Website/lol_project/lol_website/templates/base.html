@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOL Helper</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a href="{% url 'index' %}" class="navbar-item">
+                    <img src="{% static 'favicon/favicon.ico' %}" width="28" height="28">
+                    <span class="ml-2">LOL Helper</span>
+                </a>
+                <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-start">
+                    <a href="{% url 'index' %}" class="navbar-item">Home</a>
+                    <a href="{% url 'champions' %}" class="navbar-item">Champions</a>
+                    <a href="" class="navbar-item">Items</a>
+                    <a href="" class="navbar-item">Spells</a>
+                    <a href="" class="navbar-item">Runes</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p><strong>LOL Helper</strong> by <a href="https://silencepaul.github.io/Projects/">Yiming Liu</a>.</p>
+            <p>&copy; 2023 LOL Helper. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="{% static 'js/nav_bar_toggle.js' %}"></script>
+</body>
+</html>
