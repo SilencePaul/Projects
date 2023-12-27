@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load filters %}
+
+{% block content %}
+    
+<div class="container is-fluid">
+    <!-- Champion Information -->
+    {{ champion.champion}}
+
+    <!-- Champion Lore -->
+    <div class="champion-lore">
+        <h2><strong>Lore</strong></h2>
+        <p>{{ lore }}</p>
+    </div>
+
+    <!-- Party Type-->
+    <div class="champion-party-type">
+        <h2><strong>Party Type</strong></h2>
+        <p>{{ partytype }}</p>
+    </div>
+
+    <!-- Spells -->
+    <div class="champion-spells">
+        <h2>Spells</h2>
+        <ul>
+
+        </ul>
+    </div>
+
+    <!-- Stats -->
+    <div class="champion-stats">
+        <h2>Stats</h2>
+        <ul>
+
+        </ul>
+    </div>
+
+    <!-- Tips -->
+    <div class="champion-tips">
+        {% if allytips and enemytips %}
+        <h2><strong>Tips</strong></h2>
+        <h3> Ally Tips</h3>
+        <ul>
+            {% for tip in allytips %}
+                <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+        <h3> Enemy Tips</h3>
+        <ul>
+            {% for tip in enemytips %}
+                <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <!-- Skins -->
+    <div class="champion-skins">
+        <h2><strong>Skins</strong></h2>
+            {% for skin in skins %}
+                {% if skin.0 == "default" %}
+                    <h3>Original Skin</h3>
+                {% else %}
+                    <h3>{{ skin.0 }}</h3>
+                {% endif %}
+                <img src="{{ skin.1 }}" alt="{{ skin.0 }}">
+            {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
