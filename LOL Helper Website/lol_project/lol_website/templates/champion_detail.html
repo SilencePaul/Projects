@@ -22,18 +22,14 @@
 
     <!-- Spells -->
     <div class="champion-spells">
-        <h2>Spells</h2>
-        <ul>
-
-        </ul>
+        <h2><strong>Spells</strong></h2>
+        <p>{{ spells }}</p>
     </div>
 
     <!-- Stats -->
     <div class="champion-stats">
-        <h2>Stats</h2>
-        <ul>
-
-        </ul>
+        <h2><strong>Stats</strong></h2>
+        <p>{{ stats }}</p>
     </div>
 
     <!-- Tips -->
@@ -56,18 +52,41 @@
     </div>
 
     <!-- Skins -->
-    <div class="champion-skins">
-        <h2><strong>Skins</strong></h2>
-            {% for skin in skins %}
-                {% if skin.0 == "default" %}
-                    <h3>Original Skin</h3>
-                {% else %}
-                    <h3>{{ skin.0 }}</h3>
-                {% endif %}
-                <img src="{{ skin.1 }}" alt="{{ skin.0 }}">
-            {% endfor %}
-    </div>
+    <section class="section">
+        <div class="champion-skins container">
+            <h2><strong>Skins</strong></h2>
+            <p>There are {{ skin_count }} skins</p>
+            <div id="skin-carousel" class="carousel">
+                {% for skin in skins %}
+                <div class='item'>
+                    {% if skin.0 == "default" %}
+                        <h3>Original Skin</h3>
+                    {% else %}
+                        <h3>{{ skin.0 }}</h3>
+                    {% endif %}
+                    <img src="{{ skin.1 }}" alt="{{ skin.0 }}" />
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        bulmaCarousel.attach('#skin-carousel', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            initialSlide: 0,
+            navigation: true,
+            navigationKeys: true,
+            pagination: true,
+            loop: true,
+            infinite: true,
+            autoplay: true,
+        })
+    });
+</script>
 
 {% endblock %}
 

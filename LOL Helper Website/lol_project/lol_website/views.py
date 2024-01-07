@@ -48,12 +48,16 @@ def champion_detail(request, champion_name):
     for skin in skins:
         skin_list.append([skin["name"], skin_url + str(skin["num"]) + ".jpg"])
 
+    skin_count = len(skin_list)
+
     context["champion"] = champion
     context["skins"] = skin_list
     context["spells"] = spells
+    context["stats"] = stats
     context["passive"] = passive
     context["allytips"] = allytips
     context["enemytips"] = enemytips
     context["lore"] = lore
     context["partytype"] = partytype
+    context["skin_count"] = skin_count
     return render(request, 'champion_detail.html', context)
