@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load filters %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">Items</h1>
+        <h2 class="subtitle">All items</h2>
+    </div>
+    {{tags}}
+</section>
+<section class="section">
+    <div class="container is-fluid">
+        <div class="columns is-multiline">
+            {% for item in items %}
+            <div class="column has-text-centered">
+                <a href="{% url 'item_detail' item.item_id %}">
+                    <div class="card" title="{{ item.name|safe }}">
+                        <div class="card-image">
+                            <figure class="image is-64x64">
+                                <img src="{{ images|get_item:item.item_id }}" alt="{{ item.name }}">
+                            </figure>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

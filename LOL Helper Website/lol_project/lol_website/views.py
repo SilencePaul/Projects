@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 import json
 
-from .models import Champion, ChampionDetail, Version
+from .models import Champion, ChampionDetail, Item, Version
 
 def index(request):
     context = {}
@@ -74,3 +74,35 @@ def champion_detail(request, champion_name):
     context["partytype"] = partytype
     context["skin_count"] = skin_count
     return render(request, 'champion_detail.html', context)
+
+def items(request):
+    context = {}
+    items = Item.objects.all()
+    version = Version.objects.get(id=1).version
+    images_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
+    images = {}
+    for item in items:
+        images[item.item_id] = images_url + item.image
+
+    tags_list = []
+    for item in items:
+        tags = json.loads(item.tags)
+        for tag in tags:
+            if tag not in tags_list:
+                tags_list.append(tag)
+    
+    context["tags"] = tags_list
+    
+    context["images"] = images
+    context["items"] = items
+    return render(request, 'items.html', context)
+
+def item_detail(request, item_id):
+    context = {}
+    item = Item.objects.get(item_id=item_id)
+    version = Version.objects.get(id=1).version
+    images_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
+    image = images_url + item.image
+    context["image"] = image
+    context["item"] = item
+    return render(request, 'item_detail.html', context)
