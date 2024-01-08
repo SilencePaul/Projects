@@ -18,6 +18,7 @@ class ChampionDetail(models.Model):
     lore = models.TextField()
     allytips = JSONField()
     enemytips = JSONField()
+    tags = JSONField(default="null")
     partype = models.CharField(max_length=200)
     stats = JSONField()
     spells = JSONField()

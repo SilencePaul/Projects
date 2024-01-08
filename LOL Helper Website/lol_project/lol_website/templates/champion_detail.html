@@ -1,92 +1,170 @@
 {% extends "base.html" %}
 
 {% load filters %}
+{% load static %}
 
 {% block content %}
     
 <div class="container is-fluid">
     <!-- Champion Information -->
-    {{ champion.champion}}
+    <section class="section">
+        <div class="champion-info container">
+            <div class="columns">
+                <div class="column is-narrow">
+                    <img src="{{ loading_image }}" alt="{{ champion.champion }}" />
+                </div>
+                <div class="column">
+                    <h1 class="title is-2">{{ champion.champion }}</h1>
+                    <h2 class="subtitle is-3">{{ champion.title }}</h2>
+                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="has-text-centered">Basic Statistics</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-heart"></i> Health</td>
+                                <td>{{stats.hp}}</td>
+                            </tr>                            
+                            <tr>
+                                <td><i class="fa-solid fa-heart-circle-plus"></i> Health regen. (per 5s)</td>
+                                <td>{{stats.hpregen}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tint"></i> Mana</td>
+                                <td>{{stats.mp}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tint"></i> Mana regen. (per 5s)</td>
+                                <td>{{stats.mpregen}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-shield-alt"></i> Armor</td>
+                                <td>{{stats.armor}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-magic"></i> Magic resist.</td>
+                                <td>{{stats.spellblock}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-shoe-prints"></i> Move speed</td>
+                                <td>{{stats.movespeed}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-fist-raised"></i> Attack damage</td>
+                                <td>{{stats.attackdamage}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-bahai"></i> Crit. damage</td>
+                                <td>{{stats.crit}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-ruler-combined"></i> Attack range</td>
+                                <td>{{stats.attackrange}}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-stopwatch"></i> Attack speed</td>
+                                <td>{{stats.attackspeed}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </section><hr>
 
     <!-- Champion Lore -->
-    <div class="champion-lore">
-        <h2><strong>Lore</strong></h2>
-        <p>{{ lore }}</p>
-    </div>
-
-    <!-- Party Type-->
-    <div class="champion-party-type">
-        <h2><strong>Party Type</strong></h2>
-        <p>{{ partytype }}</p>
-    </div>
+    <section class="section">
+        <div class="champion-lore container">
+            <h1 class="title">Lore</h1>
+            <p>{{ lore }}</p>
+        </div>
+    </section><hr>
 
     <!-- Spells -->
-    <div class="champion-spells">
-        <h2><strong>Spells</strong></h2>
-        <p>{{ spells }}</p>
-    </div>
-
-    <!-- Stats -->
-    <div class="champion-stats">
-        <h2><strong>Stats</strong></h2>
-        <p>{{ stats }}</p>
-    </div>
+    <section class="section">
+        <h1 class="title">Spells</h1>
+        <div class="container">
+            <div class="box">
+                <h3 class="title is-4">{{ passive.name}} (Passive)</h3>
+                <div class="columns">
+                    <div class="column is-narrow">
+                        <img src="{{ passive.image}}"></img>  
+                    </div>
+                    <div class="column">
+                        <p>{{ passive.description|safe}}</p>
+                    </div>
+                </div>
+            </div>
+            {% for spell in spells %}
+            <div class="box">
+                <h3 class="title is-4">{{ spell.name}}</h3>
+                <div class="columns">
+                    <div class="column is-narrow">
+                        <img src="{{ spell.image}}"></img>  
+                    </div>
+                    <div class="column">
+                        <p>{{ spell.description|safe}}</p><br>
+                        <p><strong>Cooldown:</strong> {{ spell.cooldownBurn }} seconds</p>
+                        <p><strong>Cost:</strong> {{ spell.costBurn }}</p>
+                        <p><strong>Cost Type:</strong> {{ spell.costType }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section><hr>
 
     <!-- Tips -->
-    <div class="champion-tips">
-        {% if allytips and enemytips %}
-        <h2><strong>Tips</strong></h2>
-        <h3> Ally Tips</h3>
-        <ul>
-            {% for tip in allytips %}
-                <li>{{ tip }}</li>
-            {% endfor %}
-        </ul>
-        <h3> Enemy Tips</h3>
-        <ul>
-            {% for tip in enemytips %}
-                <li>{{ tip }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+    <section class="section">
+        <div class="champion-tips container">
+            <h1 class="title">Tips</h1>
+            <div class="columns">
+                <div class="column">
+                    <h3 class="title is-6">Ally Tips</h3>
+                    <ul>
+                        {% for tip in allytips %}
+                            <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="column">
+                    <h3 class="title is-6">Enemy Tips</h3>
+                    <ul>
+                        {% for tip in enemytips %}
+                            <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section><hr>
 
     <!-- Skins -->
     <section class="section">
         <div class="champion-skins container">
-            <h2><strong>Skins</strong></h2>
-            <p>There are {{ skin_count }} skins</p>
+            <h1 class="title">Champion Skins({{ skin_count }})</h1>
             <div id="skin-carousel" class="carousel">
                 {% for skin in skins %}
                 <div class='item'>
+                    <h3 class="has-text-warning-dark has-text-centered has-text-weight-bold"> 
                     {% if skin.0 == "default" %}
-                        <h3>Original Skin</h3>
+                        Original Skin
                     {% else %}
-                        <h3>{{ skin.0 }}</h3>
+                        {{ skin.0 }}
                     {% endif %}
+                    </h3>
                     <img src="{{ skin.1 }}" alt="{{ skin.0 }}" />
                 </div>
                 {% endfor %}
             </div>
         </div>
-    </section>
+    </section><hr>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        bulmaCarousel.attach('#skin-carousel', {
-            slidesToScroll: 1,
-            slidesToShow: 1,
-            initialSlide: 0,
-            navigation: true,
-            navigationKeys: true,
-            pagination: true,
-            loop: true,
-            infinite: true,
-            autoplay: true,
-        })
-    });
-</script>
+<script src="{% static 'js/skin_carousel.js' %}"></script>
 
 {% endblock %}
 

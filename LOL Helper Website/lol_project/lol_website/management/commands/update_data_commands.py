@@ -37,6 +37,7 @@ class Command(BaseCommand):
                     champion_detail.lore = champion_data['lore']
                     champion_detail.allytips = json.dumps(champion_data['allytips'])
                     champion_detail.enemytips = json.dumps(champion_data['enemytips'])
+                    champion_detail.tags = json.dumps(champion_data['tags'])
                     champion_detail.partype = champion_data['partype']
                     champion_detail.stats = json.dumps(champion_data['stats'])
                     champion_detail.spells = json.dumps(champion_data['spells'])
@@ -50,6 +51,7 @@ class Command(BaseCommand):
                         lore=champion_data['lore'],
                         allytips=json.dumps(champion_data['allytips']),
                         enemytips=json.dumps(champion_data['enemytips']),
+                        tags=json.dumps(champion_data['tags']),
                         partype=champion_data['partype'],
                         stats=json.dumps(champion_data['stats']),
                         spells=json.dumps(champion_data['spells']),
@@ -83,6 +85,7 @@ class Command(BaseCommand):
                     lore=champion_data['lore'],
                     allytips=json.dumps(champion_data['allytips']),
                     enemytips=json.dumps(champion_data['enemytips']),
+                    tags=json.dumps(champion_data['tags']),
                     partype=champion_data['partype'],
                     stats=json.dumps(champion_data['stats']),
                     spells=json.dumps(champion_data['spells']),
