@@ -4,22 +4,16 @@
 
 {% block content %}
 <section class="section">
-    <div class="container">
-        <h1 class="title">Items</h1>
-        <h2 class="subtitle">All items</h2>
-    </div>
-    {{tags}}
-</section>
-<section class="section">
     <div class="container is-fluid">
+        <h1 class="title">Items</h1>
         <div class="columns is-multiline">
-            {% for item in items %}
-            <div class="column has-text-centered">
-                <a href="{% url 'item_detail' item.item_id %}">
-                    <div class="card" title="{{ item.name|safe }}">
+            {% for item in in_store_items %}
+            <div class="column is-narrow has-text-centered">
+                <a href="{% url 'item_detail' item %}">
+                    <div class="card" title="{{ item_to_name|get_item:item|safe }}">
                         <div class="card-image">
                             <figure class="image is-64x64">
-                                <img src="{{ images|get_item:item.item_id }}" alt="{{ item.name }}">
+                                <img src="{{ images|get_item:item }}" alt="{{ item.name }}">
                             </figure>
                         </div>
                     </div>
@@ -29,4 +23,25 @@
         </div>
     </div>
 </section>
+<section class="section">
+    <div class="container is-fluid">
+        <h1 class="title">Removed Items</h1>
+        <div class="columns is-multiline">
+            {% for item in off_store_items %}
+            <div class="column is-narrow has-text-centered">
+                <a href="{% url 'item_detail' item %}">
+                    <div class="card" title="{{ item_to_name|get_item:item|safe }}">
+                        <div class="card-image">
+                            <figure class="image is-64x64">
+                                <img src="{{ images|get_item:item }}" alt="{{ item.name }}">
+                            </figure>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
 {% endblock %}

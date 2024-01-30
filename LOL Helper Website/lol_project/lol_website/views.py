@@ -19,7 +19,7 @@ def index(request):
 
 def champions(request):
     context = {}
-    champions = Champion.objects.all()
+    champions = Champion.objects.all().order_by("name")
     images_url = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading/"
     images_url_end = "_0.jpg"
     images = {}
@@ -54,7 +54,7 @@ def champion_detail(request, champion_name):
     images_url_end = "_0.jpg"
     loading_image = images_url + champion.champion.search_name + images_url_end
 
-    version = Version.objects.get(id=1).version
+    version = Version.objects.all().order_by("id").last().version
     spells_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/spell/"
     passive_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/passive/"
     for spell in spells:
@@ -78,11 +78,23 @@ def champion_detail(request, champion_name):
 def items(request):
     context = {}
     items = Item.objects.all()
-    version = Version.objects.get(id=1).version
+    version = Version.objects.all().order_by("id").last().version
     images_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
     images = {}
+    item_to_name = {}
+    in_store_items = []
+    off_store_items = []
     for item in items:
         images[item.item_id] = images_url + item.image
+        item_to_name[item.item_id] = item.name
+        if item.maps["11"] == False:
+            off_store_items.append(item.item_id)
+        elif item.maps["11"] == True:
+            in_store_items.append(item.item_id)
+    
+    context["in_store_items"] = in_store_items
+    context["off_store_items"] = off_store_items
+    context["item_to_name"] = item_to_name
 
     tags_list = []
     for item in items:
@@ -92,7 +104,6 @@ def items(request):
                 tags_list.append(tag)
     
     context["tags"] = tags_list
-    
     context["images"] = images
     context["items"] = items
     return render(request, 'items.html', context)
@@ -100,7 +111,7 @@ def items(request):
 def item_detail(request, item_id):
     context = {}
     item = Item.objects.get(item_id=item_id)
-    version = Version.objects.get(id=1).version
+    version = Version.objects.all().order_by("id").last().version
     images_url = "https://ddragon.leagueoflegends.com/cdn/" + version + "/img/item/"
     image = images_url + item.image
     context["image"] = image
