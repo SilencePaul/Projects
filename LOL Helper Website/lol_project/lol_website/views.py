@@ -84,6 +84,18 @@ def items(request):
     item_to_name = {}
     in_store_items = []
     off_store_items = []
+    starter_items = []
+    consumable_items = []
+    distributed_items = []
+    trinket_items = []
+    boots_items = []
+    basic_items = []
+    epic_items = []
+    legendary_items = []
+    ornn_items = []
+    champion_exclusive_items = []
+    minion_and_turret_items = []
+
     for item in items:
         images[item.item_id] = images_url + item.image
         item_to_name[item.item_id] = item.name
@@ -91,21 +103,94 @@ def items(request):
             off_store_items.append(item.item_id)
         elif item.maps["11"] == True:
             in_store_items.append(item.item_id)
-    
-    context["in_store_items"] = in_store_items
-    context["off_store_items"] = off_store_items
-    context["item_to_name"] = item_to_name
 
-    tags_list = []
     for item in items:
         tags = json.loads(item.tags)
-        for tag in tags:
-            if tag not in tags_list:
-                tags_list.append(tag)
+        if "Consumable" in tags and (item.maps.get("11") is True or item.maps.get("12") is True) and item.in_store != False and item.required_Champion == None:
+            consumable_items.append(item.item_id)
+
+    for item in items:
+        if item.consumed == True and item.in_store == False and (item.maps.get("11") is True or item.maps.get("12") is True) and item.required_Champion == None:
+            distributed_items.append(item.item_id)
     
-    context["tags"] = tags_list
+    for item in items:
+        tags = json.loads(item.tags)
+        if "Trinket" in tags and (item.maps.get("11") is True or item.maps.get("12") is True):
+            trinket_items.append(item.item_id)
+
+    for item in items:
+        tags = json.loads(item.tags)
+        if "Boots" in tags and (item.maps.get("11") is True or item.maps.get("12") is True):
+            boots_items.append(item.item_id)
+
+    for item in items:
+        tags = json.loads(item.tags)
+        if ("Lane" in tags and (item.maps.get("11") is True or item.maps.get("12") is True)) or ("Jungle" in tags and (item.maps.get("11", False) or item.maps.get("12", False))):
+            if item.into_item == None and item.from_item == None and item.in_store != False:
+                if item.item_id not in trinket_items and item.item_id not in consumable_items and item.item_id not in trinket_items:
+                    starter_items.append(item.item_id)
+    
+    for item in items:
+        if item.from_item == None and item.in_store != False and item.required_Champion == None:
+            if item.maps.get("11") is True or item.maps.get("12") is True:
+                if item.item_id not in trinket_items and item.item_id not in consumable_items and item.item_id not in trinket_items and item.item_id not in starter_items:
+                    basic_items.append(item.item_id)
+    
+    for item in items:
+        if item.from_item != None and item.in_store != False and item.required_Champion == None and item.into_item != None:
+            if item.maps.get("11") is True or item.maps.get("12") is True:
+                try:
+                    intos = json.loads(item.into_item)
+                    if intos[0] < "7000" or len(intos) > 1:
+                        epic_items.append(item.item_id)
+                except:
+                    print("Failed to decode", item.name, item.item_id)
+    
+    for item in items:
+        if item.from_item != None and item.in_store != False and item.required_Champion == None:
+            if item.maps.get("11") is True or item.maps.get("12") is True:
+                if item.item_id not in epic_items and item.item_id not in boots_items and item.item_id not in starter_items and item.item_id not in trinket_items and item.item_id not in consumable_items and item.item_id not in trinket_items:
+                    if item.into_item == None:
+                        legendary_items.append(item.item_id)
+                    else:
+                        try:
+                            intos = json.loads(item.into_item)
+                            if len(intos[0]) == 1 and  intos[0] > "7000":
+                                legendary_items.append(item.item_id)
+                        except:
+                            print("Failed to decode", item.name, item.item_id)
+    
+    for item in items:
+        if item.required_Ally == "Ornn" and item.in_store != False:
+            if item.maps.get("11") is True or item.maps.get("12") is True:
+                ornn_items.append(item.item_id)
+
+    for item in items:
+        if item.required_Champion != None:
+            if item.maps.get("11") is True or item.maps.get("12") is True:
+                champion_exclusive_items.append(item.item_id)
+    
+    for item in items:
+        if item.maps.get("11") is True or item.maps.get("12") is True:
+            if item.in_store == False and item.into_item == None and item.from_item == None:
+                if item.item_id not in trinket_items and item.item_id not in consumable_items and item.item_id not in trinket_items and item.item_id not in starter_items and item.item_id not in epic_items and item.item_id not in legendary_items and item.item_id not in ornn_items and item.item_id not in champion_exclusive_items:
+                    if item.item_id not in distributed_items and item.special_recipe == None:
+                        minion_and_turret_items.append(item.item_id)
+    
+    context["starter_items"] = starter_items
+    context["consumable_items"] = consumable_items
+    context["distributed_items"] = distributed_items
+    context["trinket_items"] = trinket_items
+    context["boots_items"] = boots_items
+    context["basic_items"] = basic_items
+    context["epic_items"] = epic_items
+    context["legendary_items"] = legendary_items
+    context["ornn_items"] = ornn_items
+    context["champion_exclusive_items"] = champion_exclusive_items
+    context["minion_and_turret_items"] = minion_and_turret_items
     context["images"] = images
     context["items"] = items
+    context["item_to_name"] = item_to_name
     return render(request, 'items.html', context)
 
 def item_detail(request, item_id):

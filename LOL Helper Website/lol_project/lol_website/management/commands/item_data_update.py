@@ -53,13 +53,13 @@ class Command(BaseCommand):
             if 'depth' in item:
                 depth = item['depth']
             else:
-                depth = None
+                depth = 0
             if 'into' in item:
-                into_item = item['into']
+                into_item = json.dumps(item['into'])
             else:
                 into_item = None
             if 'from' in item:
-                from_item = item['from']
+                from_item = json.dumps(item['from'])
             else:
                 from_item = None
             if 'inStore' in item:
@@ -83,10 +83,10 @@ class Command(BaseCommand):
             else:
                 required_Champion = None
             
-            item = Item.objects.filter(item_id=item_id).first()
+            item_check = Item.objects.filter(item_id=item_id).first()
 
-            if item is None:
-                item = Item(
+            if item_check is None:
+                item_check = Item(
                             item_id=item_id, 
                             name=name, 
                             description=description, 
@@ -105,25 +105,25 @@ class Command(BaseCommand):
                             required_Ally=required_Ally, 
                             required_Champion=required_Champion
                             )
-                item.save()
-                self.stdout.write(self.style.SUCCESS(f'Successfully added item {item.name}'))
+                item_check.save()
+                self.stdout.write(self.style.SUCCESS(f'Successfully added item {item_check.name}'))
             else:
-                item.name = name
-                item.description = description
-                item.plaintext = plaintext
-                item.image = image
-                item.gold = gold
-                item.tags = tags
-                item.stats = stats
-                item.maps = maps
-                item.depth = depth
-                item.into_item = into_item
-                item.from_item = from_item
-                item.in_store = in_store
-                item.consumed = consumed
-                item.special_recipe = special_recipe
-                item.required_Ally = required_Ally
-                item.required_Champion = required_Champion
-                item.save()
-                self.stdout.write(self.style.SUCCESS(f'Successfully updated item {item.name}'))
+                item_check.name = name
+                item_check.description = description
+                item_check.plaintext = plaintext
+                item_check.image = image
+                item_check.gold = gold
+                item_check.tags = tags
+                item_check.stats = stats
+                item_check.maps = maps
+                item_check.depth = depth
+                item_check.into_item = into_item
+                item_check.from_item = from_item
+                item_check.in_store = in_store
+                item_check.consumed = consumed
+                item_check.special_recipe = special_recipe
+                item_check.required_Ally = required_Ally
+                item_check.required_Champion = required_Champion
+                item_check.save()
+                self.stdout.write(self.style.SUCCESS(f'Successfully updated item {item_check.name}'))
         
