@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.db.models.fields.json import JSONField
 
@@ -75,3 +76,13 @@ class GameMode(models.Model):
     def __str__(self):
         return self.game_mode
     
+class LPHistory(models.Model):
+    queueType = models.CharField(max_length=200)
+    tier = models.CharField(max_length=200)
+    rank = models.CharField(max_length=200)
+    summonerName = models.CharField(max_length=200)
+    leaguePoints = models.IntegerField()
+    wins = models.IntegerField()
+    losses = models.IntegerField()
+    updated_on = models.DateTimeField(default=timezone.now)
+

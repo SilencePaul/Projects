@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 import json
 
-from .models import Champion, ChampionDetail, Item, Version
+from .models import Champion, ChampionDetail, Item, LPHistory, Version
 
 def index(request):
     context = {}
@@ -175,7 +175,8 @@ def items(request):
             if item.in_store == False and item.into_item == None and item.from_item == None:
                 if item.item_id not in trinket_items and item.item_id not in consumable_items and item.item_id not in trinket_items and item.item_id not in starter_items and item.item_id not in epic_items and item.item_id not in legendary_items and item.item_id not in ornn_items and item.item_id not in champion_exclusive_items:
                     if item.item_id not in distributed_items and item.special_recipe == None:
-                        minion_and_turret_items.append(item.item_id)
+                        if item.name != "Structure Bounty":
+                            minion_and_turret_items.append(item.item_id)
     
     context["starter_items"] = starter_items
     context["consumable_items"] = consumable_items
@@ -202,3 +203,9 @@ def item_detail(request, item_id):
     context["image"] = image
     context["item"] = item
     return render(request, 'item_detail.html', context)
+
+def lp(request):
+    context = {}
+    lp_history = LPHistory.objects.all().order_by("updated_on").reverse()
+    context["lp_history"] = lp_history
+    return render(request, 'lp_history.html', context)

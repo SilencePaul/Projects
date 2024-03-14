@@ -8,4 +8,5 @@ urlpatterns = [
     re_path(r'^champions/(?P<champion_name>[a-zA-Z]+)/$', views.champion_detail, name='champion_detail'),
     path('items/', views.items, name='items'),
     re_path(r'^items/(?P<item_id>\d+)/$', views.item_detail, name='item_detail'),
+    path('lp/', views.lp, name='lp'),
 ]
