@@ -9,4 +9,5 @@ urlpatterns = [
     path('items/', views.items, name='items'),
     re_path(r'^items/(?P<item_id>\d+)/$', views.item_detail, name='item_detail'),
     path('lp/', views.lp, name='lp'),
+    path('api_key_update/', views.api_key_update, name='api_key'),
 ]

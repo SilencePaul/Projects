@@ -8,10 +8,10 @@ def test_working():
 def start():
     from .tasks import get_summoner_info
     get_summoner_info("supermanman")
-    get_summoner_info("Biaoge")
+    get_summoner_info("BiaoGe")
     scheduler = BackgroundScheduler()
-    scheduler.add_job(get_summoner_info, 'interval', minutes=30, args=["supermanman"])
-    scheduler.add_job(get_summoner_info, 'interval', minutes=30, args=["Biaoge"])
+    scheduler.add_job(get_summoner_info, 'interval', minutes=20, args=["supermanman"])
+    scheduler.add_job(get_summoner_info, 'interval', minutes=20, args=["BiaoGe"])
     scheduler.start()
 
 class LolWebsiteConfig(AppConfig):

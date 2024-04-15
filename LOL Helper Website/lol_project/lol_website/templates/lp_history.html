@@ -3,30 +3,86 @@
 {% load filters %}
 
 {% block content %}
-<div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Queue</th>
-                <th scope="col">Name</th>
-                <th scope="col">tier</th>
-                <th scope="col">rank</th>
-                <th scope="col">leaguePoints</th>
-                <th scope="col">Updated_on</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for history in lp_history %}
-            <tr>
-                <td>{{ history.queueType }}</td>
-                <td>{{ history.summonerName }}</td>
-                <td>{{ history.tier }}</td>
-                <td>{{ history.rank }}</td>
-                <td>{{ history.leaguePoints }}</td>
-                <td>{{ history.updated_on|date:"Y-m-d H:i:s" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+<h1>LP History</h1>
+<div class="columns">
+    <div class="column">
+        <table class="table is-striped is-narrow is-hoverable">
+            <thead>
+                <tr>
+                    <th scope="col">Queue</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">tier</th>
+                    <th scope="col">rank</th>
+                    <th scope="col">LP</th>
+                    <th scope="col">Updated_on</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in lp_history_supermanman_solo %}
+                <tr>
+                    <td>{{ history.queueType }}</td>
+                    <td>{{ history.summonerName }}</td>
+                    <td>{{ history.tier }}</td>
+                    <td>{{ history.rank }}</td>
+                    <td>{{ history.leaguePoints }}</td>
+                    <td>{{ history.updated_on|date:"Y-m-d H:i:s" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="column">
+        <table class="table is-striped is-narrow is-hoverable">
+            <thead>
+                <tr>
+                    <th scope="col">Queue</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">tier</th>
+                    <th scope="col">rank</th>
+                    <th scope="col">LP</th>
+                    <th scope="col">Updated_on</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in lp_history_supermanman_flex %}
+                <tr>
+                    <td>{{ history.queueType }}</td>
+                    <td>{{ history.summonerName }}</td>
+                    <td>{{ history.tier }}</td>
+                    <td>{{ history.rank }}</td>
+                    <td>{{ history.leaguePoints }}</td>
+                    <td>{{ history.updated_on|date:"Y-m-d H:i:s" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="column">
+        <table class="table is-striped is-narrow is-hoverable">
+            <thead>
+                <tr>
+                    <th scope="col">Queue</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">tier</th>
+                    <th scope="col">rank</th>
+                    <th scope="col">LP</th>
+                    <th scope="col">Updated_on</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in lp_history_biaoge_flex %}
+                <tr>
+                    <td>{{ history.queueType }}</td>
+                    <td>{{ history.summonerName }}</td>
+                    <td>{{ history.tier }}</td>
+                    <td>{{ history.rank }}</td>
+                    <td>{{ history.leaguePoints }}</td>
+                    <td>{{ history.updated_on|date:"Y-m-d H:i:s" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

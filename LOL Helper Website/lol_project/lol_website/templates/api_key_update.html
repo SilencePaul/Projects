@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>API Key Update</h1>
+{% if message %}
+    <div class="notification is-success">
+        {{ message }}
+    </div>
+{% elif error_message %}
+    <div class="notification is-danger">
+        {{ error_message }}
+    </div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="field">
+        <label class="label">API Key</label>
+        <div class="control">
+            <input class="input" type="text" name="api_key" value="{{ api_key }}">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button class="button is-link">Update</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

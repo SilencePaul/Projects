@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.db.models import Q
+from django.core.serializers import serialize
 
 import json
 
-from .models import Champion, ChampionDetail, Item, LPHistory, Version
+import requests
+
+from .models import *
 
 def index(request):
     context = {}
@@ -206,6 +210,32 @@ def item_detail(request, item_id):
 
 def lp(request):
     context = {}
-    lp_history = LPHistory.objects.all().order_by("updated_on").reverse()
-    context["lp_history"] = lp_history
+    lp_history_supermanman_solo = LPHistory.objects.filter(Q(queueType="RANKED_SOLO_5x5")
+                                        & Q(summonerName="supermanman")).order_by("updated_on")
+    lp_history_supermanman_flex = LPHistory.objects.filter(Q(queueType="RANKED_FLEX_SR")
+                                        & Q(summonerName="supermanman")).order_by("updated_on")
+    lp_history_biaoge_flex = LPHistory.objects.filter(Q(queueType="RANKED_FLEX_SR")
+                                        & Q(summonerName="BiaoGe")).order_by("updated_on")
+
+    context["lp_history_supermanman_solo"] = lp_history_supermanman_solo
+    context["lp_history_supermanman_flex"] = lp_history_supermanman_flex
+    context["lp_history_biaoge_flex"] = lp_history_biaoge_flex
     return render(request, 'lp_history.html', context)
+
+def api_key_update(request):
+    context = {}
+    if request.method == "POST":
+        api_key = request.POST.get("api_key")
+        response = requests.get(f'https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key={api_key}')
+        response_json = response.json()
+        if "status" in response_json:
+            if response_json["status"]["status_code"] == 403:
+                message = "API Key is invalid"
+                context["error_message"] = message
+                return render(request, 'api_key_update.html', context)
+        APIKey.objects.all().delete()
+        new_api_key = APIKey(api_key=api_key)
+        new_api_key.save()
+        message = "API Key Updated"
+        context["message"] = message
+    return render(request, 'api_key_update.html', context)

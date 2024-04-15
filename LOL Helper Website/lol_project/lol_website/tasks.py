@@ -1,15 +1,28 @@
 import requests
 from django.db.models import Q
-from lol_website.models import LPHistory
+from lol_website.models import LPHistory, APIKey
 
-apikey = "RGAPI-db2284f5-41d8-4782-af82-c4bc6eb18925"
 
 def get_summoner_info(summoner_name):
+    try:
+        apikey = APIKey.objects.all().first().api_key
+    except:
+        print("API Key Not Found")
+        return
+
     summoner_response = requests.get(f'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}?api_key={apikey}')
     summoner_data = summoner_response.json()
-    id = summoner_data['id']
-    name = summoner_data['name']
+    try:
+        id = summoner_data['id']
+        puuid = summoner_data['puuid']
+    except:
+        print("API Key has expired")
+        return
 
+    summoner_account = requests.get(f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/{puuid}?api_key={apikey}')
+    summoner_account_data = summoner_account.json()
+
+    name = summoner_account_data['gameName']
     print(f"Checking Summoner Name: {name}")
 
 
