@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from django.core.serializers import serialize
+from django.core.management import call_command
 
 import json
 
@@ -222,20 +223,29 @@ def lp(request):
     context["lp_history_biaoge_flex"] = lp_history_biaoge_flex
     return render(request, 'lp_history.html', context)
 
-def api_key_update(request):
+def updates(request):
     context = {}
+    messages = []
     if request.method == "POST":
         api_key = request.POST.get("api_key")
+        champion_data = request.POST.get("champion_data")
+        item_data = request.POST.get("item_data")
+        if champion_data == "true":
+            call_command("champion_data_update")
+            messages.append("Champion Data Updated")
+        if item_data == "true":
+            call_command("item_data_update")
+            messages.append("Item Data Updated")
         response = requests.get(f'https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key={api_key}')
         response_json = response.json()
-        if "status" in response_json:
-            if response_json["status"]["status_code"] == 403:
-                message = "API Key is invalid"
-                context["error_message"] = message
-                return render(request, 'api_key_update.html', context)
-        APIKey.objects.all().delete()
-        new_api_key = APIKey(api_key=api_key)
-        new_api_key.save()
-        message = "API Key Updated"
-        context["message"] = message
-    return render(request, 'api_key_update.html', context)
+        if response_json["status"]["status_code"] == 403:
+            message = "API Key is invalid"
+            context["error_message"] = message
+            return render(request, 'updates.html', context)
+        else:
+            APIKey.objects.all().delete()
+            new_api_key = APIKey(api_key=api_key)
+            new_api_key.save()
+            messages.append("API Key Updated")
+        context["messages"] = messages
+    return render(request, 'updates.html', context)
