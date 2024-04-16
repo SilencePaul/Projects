@@ -15,9 +15,9 @@ import os  # Import os to use environment variables
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'default-very-unsafe-key')
-DEBUG = False
-ALLOWED_HOSTS = ['159.203.6.155', 'localhost']
+SECRET_KEY = 'django-insecure-jqf5#0_26on2gyh!)n2^ya(rx5(3=e14q+ufqt$_c0zrf6dg*w'
+DEBUG = True
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'lol_website.apps.LolWebsiteConfig',
@@ -87,6 +87,5 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Add this line
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
